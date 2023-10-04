@@ -194,7 +194,7 @@ Java_com_whispercppdemo_whisper_WhisperLib_00024Companion_fullTranscribe(
     case 7: params.language = "fr"; break;
     case 8: params.language = "ja"; break;
     case 9: params.language = "pt"; break;
-    default: params.language = "auto";
+    default: params.language = "auto"; break;
     }
     params.n_threads = max_threads;
     params.offset_ms = 0;
