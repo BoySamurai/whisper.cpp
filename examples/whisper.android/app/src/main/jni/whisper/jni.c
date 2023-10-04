@@ -163,7 +163,7 @@ Java_com_whispercppdemo_whisper_WhisperLib_00024Companion_freeContext(
 
 JNIEXPORT void JNICALL
 Java_com_whispercppdemo_whisper_WhisperLib_00024Companion_fullTranscribe(
-        JNIEnv *env, jobject thiz, jlong context_ptr, jfloatArray audio_data) {
+        JNIEnv *env, jobject thiz, jlong context_ptr, jint translate, jint language, jfloatArray audio_data) {
     UNUSED(thiz);
     struct whisper_context *context = (struct whisper_context *) context_ptr;
     jfloat *audio_data_arr = (*env)->GetFloatArrayElements(env, audio_data, NULL);
@@ -179,8 +179,23 @@ Java_com_whispercppdemo_whisper_WhisperLib_00024Companion_fullTranscribe(
     params.print_progress = false;
     params.print_timestamps = true;
     params.print_special = false;
-    params.translate = false;
-    params.language = "en";
+    if (translate)
+        params.translate = true;
+    else
+        params.translate = false;
+    switch (language)
+    {
+    case 1: params.language = "en"; break;
+    case 2: params.language = "zh"; break;
+    case 3: params.language = "de"; break;
+    case 4: params.language = "es"; break;
+    case 5: params.language = "ru"; break;
+    case 6: params.language = "ko"; break;
+    case 7: params.language = "fr"; break;
+    case 8: params.language = "ja"; break;
+    case 9: params.language = "pt"; break;
+    default: params.language = "auto";
+    }
     params.n_threads = max_threads;
     params.offset_ms = 0;
     params.no_context = true;
